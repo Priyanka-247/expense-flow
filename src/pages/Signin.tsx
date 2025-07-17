@@ -3,11 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 const SignInLoginPage = () => {
   const [isLoginView, setIsLoginView] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Navigate to index page after form submission
+
+    // Validate fields before navigating
+    if (
+      (!isLoginView && fullName.trim() === "") ||
+      email.trim() === "" ||
+      password.trim() === ""
+    ) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     navigate("/index");
   };
 
@@ -23,6 +36,8 @@ const SignInLoginPage = () => {
             <input
               type="text"
               placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               className="w-full px-4 py-2 rounded bg-zinc-800 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           )}
@@ -30,12 +45,16 @@ const SignInLoginPage = () => {
           <input
             type="email"
             placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-2 rounded bg-zinc-800 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
           />
 
           <input
             type="password"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-2 rounded bg-zinc-800 placeholder-gray-400 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
           />
 
