@@ -4,10 +4,10 @@ import { SummaryCards } from '@/components/SummaryCards';
 import { TransactionList } from '@/components/TransactionList';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Wallet, Download, Trash2, RefreshCw, Target, TrendingUp } from 'lucide-react';
+import { Wallet, Download, Trash2, RefreshCw, Target, TrendingUp, BarChart3 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Transaction, TransactionFormData, TimeFilter, SummaryData } from '@/types/expense';
-import { storageUtils } from '@/utils/storage';
+import { enhancedStorage } from '@/utils/enhancedStorage';
 import { dateUtils } from '@/utils/dateUtils';
 
 const Index = () => {
@@ -20,7 +20,7 @@ const Index = () => {
   useEffect(() => {
     const loadTransactions = async () => {
       try {
-        const savedTransactions = storageUtils.getTransactions();
+        const savedTransactions = enhancedStorage.getTransactions();
         setTransactions(savedTransactions);
       } catch (error) {
         console.error('Failed to load transactions:', error);
@@ -76,7 +76,7 @@ const Index = () => {
         category: formData.category || undefined
       };
 
-      storageUtils.addTransaction(newTransaction);
+      enhancedStorage.addTransaction(newTransaction);
       setTransactions(prev => [newTransaction, ...prev]);
       
       toast({
@@ -95,7 +95,7 @@ const Index = () => {
 
   const handleDeleteTransaction = (id: string) => {
     try {
-      storageUtils.deleteTransaction(id);
+      enhancedStorage.deleteTransaction(id);
       setTransactions(prev => prev.filter(tx => tx.id !== id));
       
       toast({
@@ -114,7 +114,7 @@ const Index = () => {
 
   const handleClearAllData = () => {
     try {
-      storageUtils.clearAllTransactions();
+      enhancedStorage.clearAllData();
       setTransactions([]);
       
       toast({
@@ -160,7 +160,7 @@ const Index = () => {
   const handleRefreshData = () => {
     setIsLoading(true);
     setTimeout(() => {
-      const savedTransactions = storageUtils.getTransactions();
+      const savedTransactions = enhancedStorage.getTransactions();
       setTransactions(savedTransactions);
       setIsLoading(false);
       toast({
@@ -267,17 +267,19 @@ const Index = () => {
               </div>
             </Link>
             
-            <div className="bg-card border border-border/50 rounded-lg p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">Analytics</h3>
-                  <p className="text-sm text-muted-foreground">View detailed insights</p>
+            <Link to="/analytics" className="group">
+              <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-primary/50 transition-all duration-200 hover:shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
+                    <BarChart3 className="w-6 h-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Analytics</h3>
+                    <p className="text-sm text-muted-foreground">View detailed insights</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
             
             <div className="bg-card border border-border/50 rounded-lg p-6">
               <div className="flex items-center gap-4">

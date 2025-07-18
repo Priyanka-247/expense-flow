@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import SignInLoginPage from "./pages/Signin";
+import Analytics from "./pages/Analytics";
 import SavingsGoalTracker from "./pages/SavingsGoalTracker";
 import NotFound from "./pages/NotFound";
 import "./i18n";
@@ -22,6 +23,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<SignInLoginPage />} />
             <Route path="/index" element={<Index />} />
+            <Route path="/analytics" element={<Analytics />} />
             <Route path="/savings" element={<SavingsGoalTracker />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
