@@ -4,7 +4,8 @@ import { SummaryCards } from '@/components/SummaryCards';
 import { TransactionList } from '@/components/TransactionList';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Wallet, Download, Trash2, RefreshCw } from 'lucide-react';
+import { Wallet, Download, Trash2, RefreshCw, Target, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Transaction, TransactionFormData, TimeFilter, SummaryData } from '@/types/expense';
 import { storageUtils } from '@/utils/storage';
 import { dateUtils } from '@/utils/dateUtils';
@@ -200,6 +201,17 @@ const Index = () => {
             </div>
             
             <div className="flex items-center gap-2">
+              <Link to="/savings">
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
+                  <Target className="w-4 h-4 mr-2" />
+                  Savings Goals
+                </Button>
+              </Link>
+              
               <Button
                 variant="ghost"
                 size="sm"
@@ -238,6 +250,49 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Link to="/savings" className="group">
+              <div className="bg-card border border-border/50 rounded-lg p-6 hover:border-primary/50 transition-all duration-200 hover:shadow-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Target className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Savings Goals</h3>
+                    <p className="text-sm text-muted-foreground">Track your savings progress</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            
+            <div className="bg-card border border-border/50 rounded-lg p-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground">Analytics</h3>
+                  <p className="text-sm text-muted-foreground">View detailed insights</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-card border border-border/50 rounded-lg p-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
+                  <Wallet className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground">Total Balance</h3>
+                  <p className="text-sm font-medium text-foreground">${summaryData.balance.toFixed(2)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           {/* Transaction Form */}
           <div className="xl:col-span-1">
